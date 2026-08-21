@@ -103,23 +103,23 @@
     <!--Education level-->
     <select class="form-select" aria-label="Default select example"id="9">
         <option selected value="1">Education level</option>
-        <option value="Graduate">Graduate</option>
-        <option value="Not Graduate">Not Graduate</option>
+        <option value="1">Graduate</option>
+        <option value="0">Not Graduate</option>
 </select>
     <br>
     <!--Employment status-->
     <select class="form-select" aria-label="Default select example"id="10">
         <option selected value="1">Employment status</option>
-        <option value="Salaried">Salaried</option>
-        <option value="Self-employed">Self-employed</option>
-        <option value="Unemployed">Unemployed</option>
+        <option value="1-0-0">Salaried</option>
+        <option value="0-1-0">Self-employed</option>
+        <option value="0-0-1">Unemployed</option>
 </select>
     <br>
      <!--Marital_Status-->
     <select class="form-select" aria-label="Default select example"id="11">
         <option selected value="1">Marital Status</option>
-        <option value="Single">Single</option>
-        <option value="Married">Married</option>
+        <option value="0">Single</option>
+        <option value="1">Married</option>
 </select>
     <br>
    <button type="button" class="btn btn-secondary"onclick="privious()">Privious</button>
@@ -130,33 +130,33 @@
     <!--Loan Purpose-->
     <select class="form-select" aria-label="Default select example"id="12">
         <option selected value="1">Loan Purpose</option>
-        <option value="Car">Car</option>
-        <option value="Education">Education</option>
-        <option value="Home">Home</option>
-        <option value="Personal">Personal</option>
+        <option value="1-0-0-0">Car</option>
+        <option value="0-1-0-0">Education</option>
+        <option value="0-0-1-0">Home</option>
+        <option value="0-0-0-1">Personal</option>
 </select>
     <br>
     <!--Property_Area-->
     <select class="form-select" aria-label="Default select example"id="13">
         <option selected value="1">Loan Purpose</option>
-        <option value="Semiurban">Semiurban</option>
-        <option value="Urban">Urban</option>
+        <option value="1-0">Semiurban</option>
+        <option value="0-1">Urban</option>
 </select>
     <br>
     <!--Gender-->
     <select class="form-select" aria-label="Default select example"id="14">
         <option selected value="1">Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option value="1">Male</option>
+        <option value="0">Female</option>
 </select>
     <br>
 <!--Employer Category-->
     <select class="form-select" aria-label="Default select example"id="15">
         <option selected value="1">Employer Category</option>
-        <option value="Government">Government</option>
-        <option value="MNC">MNC</option>
-        <option value="Private">Private</option>
-        <option value="Unemployed">Unemployed</option>
+        <option value="1-0-0-0">Government</option>
+        <option value="0-1-0-0">MNC</option>
+        <option value="0-0-1-0">Private</option>
+        <option value="0-0-0-1">Unemployed</option>
 </select>
     <br>
 <!--DTI Ratio-->
@@ -166,7 +166,7 @@
     </div>
 <!--Credit Score-->
     <div class="form-floating mb-2">
-   <input type="number" class="form-control" id="16" placeholder="Password">
+   <input type="number" class="form-control" id="17 " placeholder="Password">
     <label for="16">Enter Credit Score</label>
     </div>
    <button type="button" class="btn btn-secondary"onclick="privious()">Privious</button>
@@ -212,22 +212,19 @@
    function submit() {
     var array = [];
 
-    for (var i = 0; i <= 17; i++) {
-        var element = document.getElementById(i);
+for (var i = 0; i < 18; i++) {
+    var input = document.getElementById(`${i}`);
 
-        if (element === null) {
-            console.log("Element not found: " + i);
-            continue;
-        }
-
-        if (element.tagName === "SELECT") {
-            array.push(element.value);
-        } else {
-            array.push(Number(element.value));
-        }
+    if (input.tagName === "SELECT") {
+        var select = input.value.split("-").map(x=>Number(x));
+        array.push(...select);
+    } else {
+        array.push(Number(input.value));
     }
+}
 
-    console.log(array);
+console.log(array);
+
 }
 </script>
 </script>
