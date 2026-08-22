@@ -39,6 +39,10 @@
         #in_0{
             display:block;
         }
+        #output{
+            display: block;
+            text-align: center;
+        }
     </style>
     
 </head>
@@ -103,8 +107,8 @@
     <!--Education level-->
     <select class="form-select" aria-label="Default select example"id="9">
         <option selected value="-1">Education level</option>
-        <option value="1">Graduate</option>
-        <option value="0">Not Graduate</option>
+        <option value="0">Graduate</option>
+        <option value="1">Not Graduate</option>
 </select>
     <br>
     <!--Employment status-->
@@ -118,8 +122,8 @@
      <!--Marital_Status-->
     <select class="form-select" aria-label="Default select example"id="11">
         <option selected value="-1">Marital Status</option>
-        <option value="0">Single</option>
-        <option value="1">Married</option>
+        <option value="1">Single</option><!-- Correct encoding: Marital_Status_Single = 1 -->
+        <option value="0">Married</option><!-- Correct encoding: Married is reference category -->
 </select>
     <br>
    <button type="button" class="btn btn-secondary"onclick="privious()">Privious</button>
@@ -173,6 +177,10 @@
     <button type="button" class="btn btn-primary"onclick="submit()">Submit</button>
 </div>
 </div>
+<br>
+<div class="input"id="output">
+        <h2 id="text">Result</h2>
+</div>
 <script>
     var curr=0;
     function validation(slide_id){
@@ -209,9 +217,15 @@
         curr=(curr-1)%3;
         document.getElementById("in_"+curr).style.display="block";
     }
+    var element=document.getElementById("text");
     function display(output){
-        let out=output[0];
-        
+        if (output["result"][0]==0) {
+           element.style.color="red";
+           element.innerText="❌ Rejected";
+        } else {
+            element.style.color="green";
+           element.innerText="✅ Approved";
+        }
     }
    function submit() {
     var array = [];
@@ -226,9 +240,13 @@ for (var i = 0; i < 18; i++) {
         array.push(Number(input.value));
     }
 }
-array[26]=array[26]*array[26];
-array[26]=array[26]*array[26];
+array[25]*=array[25];
+array[26]*=array[26];
 console.log(array);
+document.getElementById("output").scrollIntoView({
+                behavior: "smooth"});
+ element.style.color="blue";
+ element.innerText="Predicting......";
 //fetch
 fetch("http://localhost:8000/prediction", {
     method: "POST",
@@ -246,8 +264,8 @@ fetch("http://localhost:8000/prediction", {
     return res.json();
 })
 .then(data => {
-    console.log("Python response:", data);
-    
+    display(data);
+    console.log(data);
 })
 .catch(error => {
     alert("Error:", error);
